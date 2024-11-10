@@ -1,0 +1,43 @@
+openapi: 3.0.3
+info:
+  title: Demand Forecasting API
+  description: Standard response format for daily and seasonal demand forecasts.
+  version: 1.0.0
+  contact:
+    name: FlexiMove
+
+paths:
+  /forecastDemand:
+    get:
+      summary: Get demand forecast
+      description: Retrieve projected delivery demand for the next period.
+      operationId: getDemandForecast
+      responses:
+        '200':
+          description: Successful demand forecast response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  forecast_id:
+                    type: string
+                    description: Unique identifier for the forecast period.
+                  projected_demand:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        date:
+                          type: string
+                          format: date
+                          description: Date of the forecasted demand.
+                        expected_orders:
+                          type: integer
+                          description: Predicted number of orders for that day.
+                  seasonal_adjustments:
+                    type: string
+                    description: Adjustments based on weekly/monthly seasonality.
+                  status:
+                    type: string
+                    description: Status of the demand forecast request.
