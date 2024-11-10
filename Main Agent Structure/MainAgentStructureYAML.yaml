@@ -6,6 +6,7 @@ Route Optimization: Calculate optimal routes for deliveries.
 Demand Forecasting: Predict high-demand periods to allocate resources efficiently.
 Real-Time Adjustment: Modify routes in response to live data updates.
 Agent Instructions
+
 The Agent Instructions define how the agent operates with Vertex AI, what data to use, and how to perform each core task.
 
 #1. Route Optimization Instructions
@@ -15,10 +16,12 @@ Load Data:
 
 Access historical delivery data and vehicle fleet data to calculate initial route assignments.
 Integrate real-time traffic and weather data by setting up API endpoints.
+
 Algorithm Execution:
 
 For simple routes (direct paths), use Dijkstra’s algorithm to find the shortest path between customer locations.
 For multi-stop or complex routes, use Google OR-Tools to optimize across multiple delivery points, considering vehicle capacity and delivery urgency.
+
 Sub-Agent Collaboration:
 
 Real-Time Adjustment Agent: Adjusts routes based on new real-time data (e.g., changes in traffic or weather) by re-running the OR-Tools algorithm.
