@@ -8,7 +8,7 @@ Real-Time Adjustment: Modify routes in response to live data updates.
 Agent Instructions
 The Agent Instructions define how the agent operates with Vertex AI, what data to use, and how to perform each core task.
 
-1. Route Optimization Instructions
+#1. Route Optimization Instructions
 Instructions:
 
 Load Data:
@@ -33,7 +33,9 @@ Instructions:
 Monitor traffic and weather APIs for any updates and adjust route weights based on delays.
 Prompt the main agent to re-run the OR-Tools optimization process if conditions change significantly.
 Send updated ETAs and route changes to the FlexiMove platform.
-2. Demand Forecasting Instructions
+
+
+#2. Demand Forecasting Instructions
 Goal: Predict delivery demand using historical patterns, allowing FlexiMove to proactively assign vehicles and drivers for high-demand days.
 
 Instructions:
@@ -60,7 +62,9 @@ Goal: Refine demand forecasts by analyzing weekly and monthly seasonal trends.
 Instructions:
 Continuously review incoming demand data to detect unexpected deviations from seasonal patterns.
 Recalibrate the SARIMA model periodically, and provide feedback to the Demand Forecasting Agent.
-3. Real-Time Adjustment Instructions
+
+
+#3. Real-Time Adjustment Instructions
 Goal: Respond to real-time data updates, such as traffic conditions, weather changes, or new orders, to adjust delivery routes dynamically.
 
 Instructions:
