@@ -1,1 +1,79 @@
+Main Agent: FlexiMove Logistics Optimization Agent
+Goal
+The goal of the FlexiMove Logistics Optimization Agent is to optimize daily routes, predict delivery demand, and dynamically adjust operations based on real-time data (e.g., traffic, weather, and new orders). This agent’s functions include:
 
+Route Optimization: Calculate optimal routes for deliveries.
+Demand Forecasting: Predict high-demand periods to allocate resources efficiently.
+Real-Time Adjustment: Modify routes in response to live data updates.
+Agent Instructions
+The Agent Instructions define how the agent operates with Vertex AI, what data to use, and how to perform each core task.
+
+1. Route Optimization Instructions
+Instructions:
+
+Load Data:
+
+Access historical delivery data and vehicle fleet data to calculate initial route assignments.
+Integrate real-time traffic and weather data by setting up API endpoints.
+Algorithm Execution:
+
+For simple routes (direct paths), use Dijkstra’s algorithm to find the shortest path between customer locations.
+For multi-stop or complex routes, use Google OR-Tools to optimize across multiple delivery points, considering vehicle capacity and delivery urgency.
+Sub-Agent Collaboration:
+
+Real-Time Adjustment Agent: Adjusts routes based on new real-time data (e.g., changes in traffic or weather) by re-running the OR-Tools algorithm.
+Output:
+
+Generate an optimal route plan with an estimated time of arrival (ETA) for each delivery stop.
+Display ETAs and assigned routes to the FlexiMove interface.
+Example Sub-Agent: RealTimeAdjustmentAgent
+
+Goal: Re-evaluate and update delivery routes in real-time when live data (e.g., new orders, traffic changes) are received.
+Instructions:
+Monitor traffic and weather APIs for any updates and adjust route weights based on delays.
+Prompt the main agent to re-run the OR-Tools optimization process if conditions change significantly.
+Send updated ETAs and route changes to the FlexiMove platform.
+2. Demand Forecasting Instructions
+Goal: Predict delivery demand using historical patterns, allowing FlexiMove to proactively assign vehicles and drivers for high-demand days.
+
+Instructions:
+
+Load Data:
+
+Access historical_order_data.csv and seasonal_demand_patterns.csv to train the demand forecasting model.
+Include any holiday and seasonality data that could affect demand.
+Run ARIMA/SARIMA Algorithm:
+
+For basic trends, use an ARIMA model to forecast demand based on historical data.
+For seasonally affected demand, run SARIMA with weekly or monthly periodicity to capture recurring patterns.
+Sub-Agent Collaboration:
+
+Route Optimizer Agent: Shares predicted demand values to help optimize vehicle allocation and delivery routes.
+Real-Time Adjustment Agent: Adjusts forecasts in response to unexpected peaks in demand (e.g., same-day new orders).
+Output:
+
+Generate daily demand forecasts for the next 30 days, adjusting for seasonality.
+Share forecasts with FlexiMove’s platform to allow for resource allocation based on expected demand.
+Example Sub-Agent: SeasonalAdjustmentAgent
+
+Goal: Refine demand forecasts by analyzing weekly and monthly seasonal trends.
+Instructions:
+Continuously review incoming demand data to detect unexpected deviations from seasonal patterns.
+Recalibrate the SARIMA model periodically, and provide feedback to the Demand Forecasting Agent.
+3. Real-Time Adjustment Instructions
+Goal: Respond to real-time data updates, such as traffic conditions, weather changes, or new orders, to adjust delivery routes dynamically.
+
+Instructions:
+
+Monitor Real-Time Data:
+
+Integrate Google Maps API for real-time traffic updates and a weather API to assess weather impacts.
+Continuously check for new delivery orders to adjust schedules accordingly.
+Update Route Optimization:
+
+For route recalculations, adjust graph weights in the Dijkstra or OR-Tools algorithm based on updated delay times.
+Use the RealTimeAdjustmentAgent to trigger a re-optimization of routes whenever significant delays are detected.
+Output:
+
+Immediately update FlexiMove’s platform with adjusted ETAs and route changes.
+Display updated route information to drivers and ensure delivery priorities are met.
