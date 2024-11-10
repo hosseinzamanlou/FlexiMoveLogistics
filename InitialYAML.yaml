@@ -17,6 +17,56 @@ StructuredSolutionOverview:
           - real_time_traffic_data
           - weather_conditions
         Output: "Optimal delivery route with ETA for each stop"
+        
+Step 1: Understanding the Problem Scope and Data Preparation
+In the logistics scenario of FlexiMove, there are several dynamic factors to consider:
+Customer Locations: These are given as GPS coordinates and represent the stops on each route.
+Traffic and Weather Conditions: Real-time data that impacts travel times and might cause route changes.
+Delivery Urgency: A priority level that dictates whether a delivery is high-priority, medium, or low.
+With these inputs, we need to calculate the optimal route that minimizes the travel time and ensures timely delivery. 
+To start, we’ll use Dijkstra’s algorithm for shortest path calculations within smaller segments or less complex routes, and OR-Tools for more complex or multi-stop routes.
+
+Step 2: Implementing Dijkstra’s Algorithm
+Dijkstra’s algorithm is well-suited for finding the shortest path between two points on a graph, making it ideal for calculating direct routes or small delivery networks.
+
+Python Code for Dijkstra’s Algorithm
+Here, we assume a simplified weighted graph with nodes as customer locations and edges weighted by travel time (adjusted for traffic and weather).
+
+python code
+
+import heapq
+
+# Define Dijkstra's Algorithm for Route Optimization
+def dijkstra(graph, start_node):
+    # Initialize distances with infinity and set the distance to start_node as 0
+    distances = {node: float('infinity') for node in graph}
+    distances[start_node] = 0
+    priority_queue = [(0, start_node)]
+
+    while priority_queue:
+        current_distance, current_node = heapq.heappop(priority_queue)
+
+        # Skip nodes if we found a shorter path
+        if current_distance > distances[current_node]:
+            continue
+
+        # Explore neighbors of the current node
+        for neighbor, weight in graph[current_node].items():
+            distance = current_distance + weight
+
+            # Only consider this path if it’s better
+            if distance < distances[neighbor]:
+                distances[neighbor] = distance
+                heapq.heappush(priority_queue, (distance, neighbor))
+
+    return distances
+
+Explanation
+Input: A weighted graph where nodes represent customer locations and edges represent travel times.
+Output: Shortest path distances from the start node to all other nodes.
+Functionality: This function helps calculate minimal travel times, considering real-time traffic as edge weights. Adjustments are made using data from real_time_traffic_data.csv and weather_conditions.
+
+       
     - RealTimeAdjustment:
         Description: >
           Adjusts active routes dynamically based on real-time data like traffic 
@@ -30,6 +80,43 @@ StructuredSolutionOverview:
           - weather_api
           - FlexiMove_delivery_data
         Output: "Updated route with recalculated ETAs"
+
+Step 3: Integrating Real-Time Traffic and Weather Data
+To dynamically adjust weights in the graph, we pull data from real-time traffic APIs (like Google Maps API) and a weather API.
+
+Example Code for Integrating Real-Time Data
+python code
+
+import requests
+
+# Function to fetch real-time traffic data
+def get_traffic_delay(location1, location2):
+    # Sample API call to Google Maps Traffic API (replace with actual API details)
+    # This is a simulated URL; please replace it with real API call and API key
+    url = f"https://maps.googleapis.com/maps/api/distancematrix/json?origins={location1}&destinations={location2}&key=YOUR_API_KEY"
+    response = requests.get(url)
+    data = response.json()
+    
+    # Extract traffic delay in minutes
+    delay = data['rows'][0]['elements'][0].get('duration_in_traffic', {}).get('value', 0) / 60
+    return delay
+
+# Function to adjust graph weights with real-time data
+def adjust_weights_with_realtime_data(graph, weather_conditions):
+    adjusted_graph = graph.copy()
+    for node, edges in graph.items():
+        for neighbor in edges:
+            # Fetch traffic delay and adjust the weight accordingly
+            traffic_delay = get_traffic_delay(node, neighbor)
+            weather_delay = weather_conditions.get((node, neighbor), 0)
+            adjusted_graph[node][neighbor] += traffic_delay + weather_delay
+    return adjusted_graph
+Code Explanation:
+
+Traffic Delay: The function get_traffic_delay uses a simulated call to Google Maps API to fetch real-time traffic delays.
+Weather Delay: For each edge in the graph, we add weather-induced delays from weather_conditions.
+
+        
     - DemandForecasting:
         Description: >
           Predicts delivery demand patterns using historical data to help FlexiMove 
@@ -40,6 +127,11 @@ StructuredSolutionOverview:
           - seasonal_demand_patterns
         Output: "Projected delivery demand"
 
+Step 4: OR-Tools for Complex Multi-Stop Routes
+Google OR-Tools provides a powerful Vehicle Routing Problem (VRP) solver, which is useful for optimizing multi-stop delivery routes.
+
+Python Code Using OR-Tools for Route Optimization
+Here’s a sample setup using OR-Tools for FlexiMove’s multi-stop route optimization:
   Interactions:
     - RouteOptimizerAgent:
         Role: "Calculates and optimizes routes based on inputs from traffic, weather, and client demand."
