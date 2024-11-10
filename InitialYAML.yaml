@@ -1,78 +1,105 @@
-solution:
-  name: "FlexiMove Route Optimization AI Agent"
-  purpose: >
-    To optimize daily routes for scheduled and ad-hoc deliveries across Switzerland and Europe,
-    improving route efficiency, reducing operational costs, and enabling real-time adjustments 
-    to meet non-contract demands. The solution integrates with FlexiMove's existing software 
-    platform, responding dynamically to new delivery requests and external factors such as 
-    traffic and weather.
-  functionalities:
-    - route_optimization:
-        description: >
-          Calculates the most efficient route for deliveries based on customer locations, 
-          traffic, weather, and time constraints.
-        algorithm: "Dijkstra’s, A*, and OR-Tools-based algorithms for pathfinding and optimization"
-        data_sources: 
+StructuredSolutionOverview:
+  Name: "FlexiMove Route Optimization AI Agent"
+  Purpose: >
+    Enhance route efficiency and provide dynamic, real-time route optimization 
+    for FlexiMove’s logistics, ensuring timely deliveries and reducing costs 
+    by integrating with FlexiMove’s existing platform for both scheduled 
+    and ad-hoc delivery demands.
+
+  Functionalities:
+    - RouteOptimization:
+        Description: >
+          Calculates the most efficient route considering customer locations, 
+          traffic, weather, and delivery urgency, for both scheduled and ad-hoc deliveries.
+        Algorithm: "Dijkstra’s and OR-Tools algorithms"
+        DataSources:
           - historical_delivery_data
           - real_time_traffic_data
           - weather_conditions
-        output: "Optimal route plan with estimated time and distance per delivery sequence"
-    - real_time_adjustment:
-        description: >
-          Adjusts the active route dynamically based on real-time updates for traffic,
-          weather, and ad-hoc delivery requests.
-        triggers:
+        Output: "Optimal delivery route with ETA for each stop"
+    - RealTimeAdjustment:
+        Description: >
+          Adjusts active routes dynamically based on real-time data like traffic 
+          and weather conditions or new delivery requests.
+        Triggers:
           - new_delivery_request
           - traffic_condition_change
           - weather_update
-        data_sources:
+        DataSources:
           - live_traffic_api
           - weather_api
-          - internal_database (ad-hoc delivery data)
-        output: "Updated route with recalculated ETAs for all stops"
-    - demand_forecasting:
-        description: >
-          Uses historical data to forecast high-demand periods, enabling proactive fleet and 
-          resource allocation.
-        algorithm: "ARIMA model for time-series forecasting"
-        data_sources:
+          - FlexiMove_delivery_data
+        Output: "Updated route with recalculated ETAs"
+    - DemandForecasting:
+        Description: >
+          Predicts delivery demand patterns using historical data to help FlexiMove 
+          prepare resources for high-demand periods.
+        Algorithm: "ARIMA model for time-series forecasting"
+        DataSources:
           - historical_order_data
           - seasonal_demand_patterns
-        output: "Predicted delivery demand for upcoming periods"
-  interactions:
-    agent_components:
-      - route_optimizer:
-          role: "Core sub-agent responsible for calculating optimal routes and making adjustments"
-          dependencies: 
-            - live_traffic_api
-            - weather_api
-          interactions: 
-            - real_time_adjustment_agent
-            - fleet_management_system
-      - real_time_adjustment_agent:
-          role: "Monitors traffic and weather to prompt dynamic changes to active routes"
-          dependencies: 
-            - live_traffic_data
-            - weather_data
-          interactions:
-            - route_optimizer
-            - FlexiMove_platform (for output integration)
-      - demand_forecasting_agent:
-          role: "Predicts upcoming delivery demand based on historical data and trends"
-          dependencies:
-            - historical_data_db
-          interactions:
-            - FlexiMove_platform (to provide forecasted demand for staffing and fleet needs)
-  deployment:
-    environment: "Vertex AI on Google Cloud Platform"
-    agent_builder: "Vertex AI Agent Builder"
-    runtime_integration: "API-based communication between agents and FlexiMove’s platform"
-    deployment_features:
+        Output: "Projected delivery demand"
+
+  Interactions:
+    - RouteOptimizerAgent:
+        Role: "Calculates and optimizes routes based on inputs from traffic, weather, and client demand."
+        Dependencies:
+          - live_traffic_api
+          - weather_api
+        Interactions:
+          - real_time_adjustment_agent
+          - fleet_management_system
+    - RealTimeAdjustmentAgent:
+        Role: "Monitors real-time conditions and adjusts routes as needed."
+        Dependencies:
+          - live_traffic_data
+          - weather_data
+        Interactions:
+          - route_optimizer_agent
+          - FlexiMove_platform
+    - DemandForecastingAgent:
+        Role: "Forecasts delivery demand to aid in planning and fleet allocation."
+        Dependencies:
+          - historical_data_db
+        Interactions:
+          - FlexiMove_platform (to share forecasts for staffing and fleet needs)
+
+  Deployment:
+    Environment: "Vertex AI on Google Cloud Platform"
+    AgentBuilder: "Vertex AI Agent Builder"
+    Integration: "API-based communication between agents and FlexiMove’s existing software"
+    Features:
       - scalable
       - secure
       - containerized
-    technical_components:
+    TechnicalComponents:
       - Vertex AI
-      - Agent Builder
       - Google Maps API for real-time traffic data
       - Weather API for environmental conditions
+
+  Metrics:
+    - OnTimeDeliveryRate:
+        Description: >
+          Percentage of deliveries arriving within scheduled time windows.
+        Calculation: "Total on-time deliveries / Total deliveries"
+        Purpose: "To assess the agent's effectiveness in meeting delivery deadlines."
+    - FuelEfficiency:
+        Description: >
+          Measures fuel consumption improvements due to optimized routing.
+        Calculation: "Total fuel saved in optimized routes vs. baseline consumption"
+        Purpose: "To evaluate cost savings and environmental benefits."
+    - AdHocResponseTime:
+        Description: >
+          Average time taken to adjust routes and incorporate ad-hoc requests.
+        Calculation: "Total time for each route adjustment / Number of adjustments"
+        Purpose: "To assess the agent's agility in responding to unscheduled demands."
+    - DeliverySuccessRate:
+        Description: >
+          Rate of successful deliveries completed as planned.
+        Calculation: "Successful deliveries / Planned deliveries"
+        Purpose: "To measure the reliability of the routing and delivery process."
+    - CustomerSatisfaction:
+        Description: >
+          Satisfaction score based on customer feedback for timely and reliable service.
+        Collection: "Survey responses or satisfaction ratings post-delivery"
+        Purpose: "To gauge overall customer satisfaction with delivery performance."
