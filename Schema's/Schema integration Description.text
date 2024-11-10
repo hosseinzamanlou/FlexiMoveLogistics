@@ -1,0 +1,19 @@
+Explanation of How to Apply Schemas
+Defining Data and Output Schemas:
+
+For each task (like Route Optimization or Real-Time Adjustment), you specify both data schemas and output schemas.
+Data Schemas: These tell Vertex AI what format to expect for incoming data from APIs or datasets. For instance, the TrafficDataSchema is listed under schemas to ensure that traffic data is requested and received in a specific format.
+Output Schemas: These define the format in which results (e.g., optimized routes or forecasted demand) should be delivered to FlexiMove’s main system. By specifying RouteOptimizationResponseSchema as the output schema, you ensure that the output is structured correctly for FlexiMove’s software to interpret.
+Mapping Schemas to External APIs:
+
+Each API call has a schema that defines parameters and response formats, making it easier for Vertex AI to interact with these APIs.
+Example: The google-maps-geocoding-api-OpenAi-sschema.yaml is listed under schemas for RouteOptimization, meaning that whenever the agent needs to convert an address to coordinates, it follows this standardized format.
+Structured Sub-Agent Interactions:
+
+Each sub-agent inherits relevant schemas, so it knows how to handle and respond to data. For instance:
+TrafficMonitoringAgent uses TrafficDataSchema to ensure it processes traffic data consistently.
+NewOrderHandlerAgent uses OrderDataSchema to standardize the integration of new orders.
+Easy API Integration and Maintenance:
+
+Using schemas in this way makes it easier to swap or update APIs. For example, if FlexiMove switches to a different weather provider, as long as the new API conforms to WeatherDataSchema, there’s minimal need to adjust other parts of the agent.
+This approach also makes error handling easier since each schema will validate incoming data against the expected structure, flagging inconsistencies right away.
