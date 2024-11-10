@@ -1,0 +1,58 @@
+openapi: 3.0.3
+info:
+  title: Traffic Data API
+  description: API for retrieving real-time traffic data between origin and destination points.
+  version: 1.0.0
+  contact:
+    name: Traffic API Provider
+
+servers:
+  - url: https://api.trafficprovider.com
+
+paths:
+  /traffic:
+    get:
+      summary: Get traffic data
+      description: Retrieve real-time traffic conditions for a route.
+      operationId: getTrafficData
+      parameters:
+        - in: query
+          name: origin
+          schema:
+            type: string
+          required: true
+          description: Starting point for the traffic data request (latitude,longitude).
+        - in: query
+          name: destination
+          schema:
+            type: string
+          required: true
+          description: Endpoint for the traffic data request (latitude,longitude).
+        - in: query
+          name: departure_time
+          schema:
+            type: string
+          description: The time of departure for which to get traffic data.
+        - in: query
+          name: mode
+          schema:
+            type: string
+            enum: [driving, walking, bicycling, transit]
+          description: Mode of transportation.
+      responses:
+        '200':
+          description: Traffic data response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  duration_in_traffic:
+                    type: integer
+                    description: Estimated travel time with traffic in minutes.
+                  delay:
+                    type: integer
+                    description: Additional delay caused by traffic in minutes.
+                  status:
+                    type: string
+                    description: Status of the traffic data request.
