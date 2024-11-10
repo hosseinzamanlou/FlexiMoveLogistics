@@ -1,0 +1,52 @@
+openapi: 3.0.3
+info:
+  title: Order Data API
+  description: Standard format for incoming delivery orders.
+  version: 1.0.0
+  contact:
+    name: FlexiMove
+
+paths:
+  /order:
+    post:
+      summary: Create new delivery order
+      description: Add a new delivery order to the system.
+      operationId: createOrder
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                order_id:
+                  type: string
+                  description: Unique identifier for the order.
+                customer_id:
+                  type: string
+                  description: Unique identifier for the customer placing the order.
+                pickup_location:
+                  type: string
+                  description: GPS coordinates for pickup location (latitude,longitude).
+                delivery_location:
+                  type: string
+                  description: GPS coordinates for delivery location (latitude,longitude).
+                priority:
+                  type: string
+                  enum: [high, medium, low]
+                  description: Priority level of the delivery.
+                delivery_deadline:
+                  type: string
+                  format: date-time
+                  description: Deadline for the delivery.
+      responses:
+        '201':
+          description: Order successfully created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Status of the order creation request.
