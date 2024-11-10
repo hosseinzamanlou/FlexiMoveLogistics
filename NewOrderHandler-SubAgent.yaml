@@ -1,0 +1,29 @@
+4. NewOrderHandlerAgent
+This sub-agent handles the integration of new orders that come in during the day, updating routes and notifying RealTimeAdjustmentAgent as needed.
+
+yaml
+Copy code
+agent_name: "NewOrderHandlerAgent"
+purpose: >
+  Integrates new delivery orders into existing daily routes and notifies 
+  RealTimeAdjustmentAgent to adjust ETAs and route planning accordingly.
+
+goals:
+  - Continuously monitor for new delivery requests.
+  - Calculate the optimal insertion point for new orders within active routes.
+  - Trigger RealTimeAdjustmentAgent to update ETAs and routes with new orders.
+
+instructions:
+  - description: "Monitor incoming order data and calculate optimal insertion points for new deliveries."
+  - algorithm: "OR-Tools re-optimization for route adjustments based on new order integration."
+  - data_sources:
+      - real_time_orders.csv
+      - vehicle_fleet_data.csv
+  - interaction_with_main_agent:
+      - name: RealTimeAdjustmentAgent
+        role: "Adjust route plans to accommodate new orders."
+        interaction: "Prompts re-optimization of routes to include new deliveries."
+
+output: 
+  - description: "Updated routes and ETAs with new orders integrated."
+  - format: "JSON with updated route and ETAs for each active delivery."
