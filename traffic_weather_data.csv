@@ -1,0 +1,6 @@
+route_id,traffic_condition,time_of_day,weather_condition,traffic_delay_min,weather_delay_min
+R001,heavy,morning,rain,15,5
+R002,moderate,afternoon,clear,8,0
+R003,light,morning,snow,5,10
+R004,heavy,afternoon,clear,20,0
+R005,moderate,morning,rain,10,7

@@ -1,0 +1,6 @@
+route_id,on_time_delivery,customer_feedback,average_delay,fuel_consumed,actual_cost
+R001,1,4,5,15.0,55.0
+R002,1,5,3,12.0,40.0
+R003,0,3,10,14.0,52.0
+R004,1,4,2,16.0,54.0
+R005,1,4,4,13.0,47.0

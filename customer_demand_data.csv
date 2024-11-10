@@ -1,0 +1,6 @@
+customer_id,customer_priority,order_frequency,expected_volume,service_level_agreement,location,preferred_delivery_times
+C001,high,daily,5,2 hours,"46.94797,7.44461",08:00-10:00
+C002,medium,weekly,15,3 hours,"46.9483,7.4514",13:00-15:00
+C003,high,daily,10,1 hour,"46.9488,7.4532",07:00-09:00
+C004,low,monthly,20,4 hours,"46.9485,7.4469",14:00-16:00
+C005,medium,daily,7,2 hours,"46.94809,7.44744",09:00-11:00
