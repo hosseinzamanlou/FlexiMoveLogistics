@@ -1,0 +1,43 @@
+openapi: 3.0.3
+info:
+  title: Route Optimization Response API
+  description: Format for optimized routes with ETAs for each delivery point.
+  version: 1.0.0
+  contact:
+    name: FlexiMove
+
+paths:
+  /optimizeRoute:
+    get:
+      summary: Get optimized route
+      description: Retrieve an optimized delivery route with ETA for each stop.
+      operationId: getOptimizedRoute
+      responses:
+        '200':
+          description: Successful route optimization response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  route_id:
+                    type: string
+                    description: Unique identifier for the route.
+                  stops:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        location:
+                          type: string
+                          description: GPS coordinates of the stop (latitude,longitude).
+                        eta:
+                          type: string
+                          format: date-time
+                          description: Estimated time of arrival at the stop.
+                  total_duration:
+                    type: integer
+                    description: Total travel time for the route in minutes.
+                  status:
+                    type: string
+                    description: Status of the route optimization.
