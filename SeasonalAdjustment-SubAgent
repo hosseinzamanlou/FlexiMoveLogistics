@@ -1,0 +1,29 @@
+2. SeasonalAdjustmentAgent
+This sub-agent focuses on analyzing seasonal trends to refine demand forecasts, which helps FlexiMove prepare for high-demand periods.
+
+yaml
+Copy code
+agent_name: "SeasonalAdjustmentAgent"
+purpose: >
+  Enhances demand forecasts by analyzing seasonal patterns, such as weekly, 
+  monthly, or holiday-related fluctuations, to improve resource allocation.
+
+goals:
+  - Identify seasonal patterns in historical demand data.
+  - Adjust demand forecasts based on detected seasonal trends.
+  - Notify DemandForecasting agent when seasonal demand variations are detected.
+
+instructions:
+  - description: "Analyze historical demand data and identify recurring seasonal patterns."
+  - algorithm: "SARIMA for detecting weekly/monthly demand seasonality."
+  - data_sources:
+      - historical_order_data.csv
+      - seasonal_demand_patterns.csv
+  - interaction_with_main_agent:
+      - name: DemandForecasting
+        role: "Adjust demand forecasts based on seasonal trend insights."
+        interaction: "Shares seasonal trend adjustments with DemandForecasting."
+
+output: 
+  - description: "Updated demand forecast with seasonal adjustments."
+  - format: "CSV with adjusted demand forecasts for upcoming periods."
