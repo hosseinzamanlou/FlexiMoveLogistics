@@ -66,6 +66,7 @@ Input: A weighted graph where nodes represent customer locations and edges repre
 Output: Shortest path distances from the start node to all other nodes.
 Functionality: This function helps calculate minimal travel times, considering real-time traffic as edge weights. Adjustments are made using data from real_time_traffic_data.csv and weather_conditions.
 
+
        
     - RealTimeAdjustment:
         Description: >
@@ -184,6 +185,7 @@ def optimal_route_or_tools():
         return route
     else:
         return None
+        
 Explanation
 Data Model: Contains the distance_matrix, a sample representation of travel distances between stops.
 Manager and Routing Model: These set up the routing problem with OR-Tools.
@@ -221,6 +223,8 @@ The results from OR-Tools provide the sequence of stops, which can be mapped to 
         Interactions:
           - FlexiMove_platform (to share forecasts for staffing and fleet needs)
 
+
+
   Deployment:
     Environment: "Vertex AI on Google Cloud Platform"
     AgentBuilder: "Vertex AI Agent Builder"
@@ -233,6 +237,8 @@ The results from OR-Tools provide the sequence of stops, which can be mapped to 
       - Vertex AI
       - Google Maps API for real-time traffic data
       - Weather API for environmental conditions
+
+
 
   Metrics:
     - OnTimeDeliveryRate:
