@@ -1,4 +1,4 @@
-#StructuredSolutionOverview:
+StructuredSolutionOverview:
   Name: "FlexiMove Logistics Optimization AI Agent"
   Purpose: >
     To optimize delivery routes, forecast demand, and dynamically adjust
@@ -6,7 +6,7 @@
     This agent integrates seamlessly with FlexiMove’s existing platform,
     enhancing efficiency, on-time delivery rates, and customer satisfaction.
 
- # Functionalities:
+  Functionalities:
     - RouteOptimization:
         Description: >
           Calculates the most efficient route considering customer locations,
@@ -39,7 +39,7 @@
           - real_time_orders.csv
         Output: "Updated routes and recalculated ETAs"
 
- # Interactions:
+  Interactions:
     - RouteOptimizerAgent:
         Role: "Calculates and optimizes routes based on inputs from traffic, weather, and client demand."
         Dependencies:
@@ -65,7 +65,7 @@
         Interactions:
           - FlexiMove_platform (to share forecasts for staffing and fleet needs)
 
-#  Deployment:
+  Deployment:
     Environment: "Vertex AI on Google Cloud Platform"
     AgentBuilder: "Vertex AI Agent Builder"
     Integration: "API-based communication between agents and FlexiMove’s existing software"
@@ -78,7 +78,7 @@
       - Google Maps API for real-time traffic data
       - Weather API for environmental conditions
 
- # Metrics:
+  Metrics:
     - OnTimeDeliveryRate:
         Description: >
           Percentage of deliveries arriving within scheduled time windows.
@@ -105,7 +105,7 @@
         Collection: "Survey responses or satisfaction ratings post-delivery"
         Purpose: "To gauge overall customer satisfaction with delivery performance."
 
- # Schemas:
+  Schemas:
     - TrafficDataSchema:
         Description: "Standard format for retrieving traffic data between origin and destination points."
         APIEndpoint: "https://api.trafficprovider.com/traffic"
