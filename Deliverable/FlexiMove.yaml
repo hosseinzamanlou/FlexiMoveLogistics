@@ -1,158 +1,110 @@
-StructuredSolutionOverview:
-  Name: "FlexiMove Logistics Optimization AI Agent"
-  Purpose: >
-    To optimize delivery routes, forecast demand, and dynamically adjust
-    routes based on real-time data (traffic, weather, and new orders).
-    This agent integrates seamlessly with FlexiMove’s existing platform,
-    enhancing efficiency, on-time delivery rates, and customer satisfaction.
-
-  Functionalities:
+# AI-Agent YAML Configuration for Route Optimization
+AI_Agent:
+  name: "FlexiMove Logistics Optimization Agent"
+  purpose: >
+    To optimize vehicle routing for logistics operations by minimizing travel distance,
+    improving fuel efficiency, and ensuring on-time delivery. The agent dynamically adjusts
+    routes based on real-time data like traffic, customer demands, and capacity constraints.
+  functionalities:
     - RouteOptimization:
-        Description: >
-          Calculates the most efficient route considering customer locations,
-          traffic, weather, and delivery urgency.
-        Algorithm: "Dijkstra’s and OR-Tools algorithms"
-        DataSources:
-          - historical_delivery_data.csv
-          - real_time_traffic_data.csv
-          - weather_conditions.csv
-        Output: "Optimal route with ETA for each stop"
+        description: >
+          Calculates the most efficient routes considering customer locations, vehicle capacities,
+          and distance constraints using heuristic and clustering algorithms.
+        methods:
+          - Nearest Neighbor Heuristic
+          - Sweep Algorithm with TSP Optimization
+        data_sources:
+          - DistanceMatrix
+          - CustomerDemands
+          - TruckCapacity
+        output: 
+          - OptimizedRoutes
+          - EvaluationMetrics
+    - DynamicAdjustment:
+        description: >
+          Responds to real-time events such as new customer orders, traffic delays, and weather changes,
+          re-optimizing routes dynamically.
+        data_sources:
+          - RealTimeTrafficData
+          - NewOrderStream
+          - WeatherData
+        triggers:
+          - traffic_update
+          - new_order
+        output:
+          - UpdatedRoutes
+          - RevisedETAs
+    - MetricsEvaluation:
+        description: >
+          Calculates key metrics such as total distance, on-time delivery rate, and fuel efficiency
+          to evaluate the solution's performance.
+        metrics:
+          - OnTimeDeliveryRate
+          - TotalDistance
+          - FuelEfficiency
+          - CustomerSatisfaction
+  interactions:
+    - NearestNeighborAgent:
+        role: >
+          Generates initial routes using the Nearest Neighbor heuristic.
+        dependencies:
+          - DistanceMatrix
+          - CustomerDemands
+        interactions:
+          - SweepAlgorithmAgent
+    - SweepAlgorithmAgent:
+        role: >
+          Clusters customers and refines routes using TSP optimization.
+        dependencies:
+          - ClusteredCustomers
+          - CustomerDemands
+        interactions:
+          - MetricsAgent
+    - MetricsAgent:
+        role: >
+          Evaluates performance metrics for generated routes.
+        dependencies:
+          - OptimizedRoutes
+          - HistoricalPerformanceData
+        interactions:
+          - ReportingSystem
+  datasets:
+    - DistanceMatrix:
+        description: >
+          A matrix representing distances between the depot and all customer locations.
+        format: CSV
+        columns: ["From", "To", "Distance"]
+    - CustomerDemands:
+        description: >
+          Data specifying demand for each customer and the depot (zero demand).
+        format: CSV
+        columns: ["CustomerID", "Demand"]
+    - TruckCapacity:
+        description: >
+          Maximum carrying capacity for each truck in the fleet.
+        format: CSV
+        columns: ["TruckID", "Capacity"]
+  deployment:
+    platform: "Vertex AI"
+    environment: "Google Cloud"
+    runtime: "Python with Flask for API"
+    endpoints:
+      - GenerateInitialRoutes
+      - AdjustRoutes
+      - EvaluateMetrics
+  evaluation:
+    metrics:
+      - name: "On-Time Delivery Rate"
+        formula: >
+          OnTimeDeliveryRate = (DeliveriesMadeOnTime / TotalDeliveries) * 100
+      - name: "Total Distance Traveled"
+        formula: >
+          TotalDistance = Sum of All Route Distances
+      - name: "Fuel Efficiency Improvement"
+        formula: >
+          FuelEfficiency = ((BaselineFuel - OptimizedFuel) / BaselineFuel) * 100
+      - name: "Customer Satisfaction"
+        collection: >
+          Customer feedback surveys post-delivery.
 
-    - DemandForecasting:
-        Description: >
-          Predicts high-demand periods using historical data and seasonality
-          patterns, aiding in proactive resource allocation.
-        Algorithm: "ARIMA/SARIMA model"
-        DataSources:
-          - historical_order_data.csv
-          - seasonal_demand_patterns.csv
-        Output: "Projected daily and seasonal demand"
 
-    - RealTimeAdjustment:
-        Description: >
-          Adjusts active routes dynamically based on real-time data
-          such as traffic, weather, or new orders.
-        Algorithm: "Re-optimization with updated delays"
-        DataSources:
-          - live_traffic_api
-          - weather_api
-          - real_time_orders.csv
-        Output: "Updated routes and recalculated ETAs"
-
-  Interactions:
-    - RouteOptimizerAgent:
-        Role: "Calculates and optimizes routes based on inputs from traffic, weather, and client demand."
-        Dependencies:
-          - live_traffic_api
-          - weather_api
-        Interactions:
-          - real_time_adjustment_agent
-          - fleet_management_system
-
-    - RealTimeAdjustmentAgent:
-        Role: "Monitors real-time conditions and adjusts routes as needed."
-        Dependencies:
-          - live_traffic_data
-          - weather_data
-        Interactions:
-          - route_optimizer_agent
-          - FlexiMove_platform
-
-    - DemandForecastingAgent:
-        Role: "Forecasts delivery demand to aid in planning and fleet allocation."
-        Dependencies:
-          - historical_data_db
-        Interactions:
-          - FlexiMove_platform (to share forecasts for staffing and fleet needs)
-
-  Deployment:
-    Environment: "Vertex AI on Google Cloud Platform"
-    AgentBuilder: "Vertex AI Agent Builder"
-    Integration: "API-based communication between agents and FlexiMove’s existing software"
-    Features:
-      - scalable
-      - secure
-      - containerized
-    TechnicalComponents:
-      - Vertex AI
-      - Google Maps API for real-time traffic data
-      - Weather API for environmental conditions
-
-  Metrics:
-    - OnTimeDeliveryRate:
-        Description: >
-          Percentage of deliveries arriving within scheduled time windows.
-        Calculation: "Total on-time deliveries / Total deliveries"
-        Purpose: "To assess the agent's effectiveness in meeting delivery deadlines."
-    - FuelEfficiency:
-        Description: >
-          Measures fuel consumption improvements due to optimized routing.
-        Calculation: "Total fuel saved in optimized routes vs. baseline consumption"
-        Purpose: "To evaluate cost savings and environmental benefits."
-    - AdHocResponseTime:
-        Description: >
-          Average time taken to adjust routes and incorporate ad-hoc requests.
-        Calculation: "Total time for each route adjustment / Number of adjustments"
-        Purpose: "To assess the agent's agility in responding to unscheduled demands."
-    - DeliverySuccessRate:
-        Description: >
-          Rate of successful deliveries completed as planned.
-        Calculation: "Successful deliveries / Planned deliveries"
-        Purpose: "To measure the reliability of the routing and delivery process."
-    - CustomerSatisfaction:
-        Description: >
-          Satisfaction score based on customer feedback for timely and reliable service.
-        Collection: "Survey responses or satisfaction ratings post-delivery"
-        Purpose: "To gauge overall customer satisfaction with delivery performance."
-
-  Schemas:
-    - TrafficDataSchema:
-        Description: "Standard format for retrieving traffic data between origin and destination points."
-        APIEndpoint: "https://api.trafficprovider.com/traffic"
-        Parameters:
-          - origin: { type: string, required: true, description: "Starting point in latitude,longitude" }
-          - destination: { type: string, required: true, description: "Endpoint in latitude,longitude" }
-          - mode: { type: string, enum: [driving, walking, bicycling, transit], description: "Transportation mode" }
-        Response:
-          - duration_in_traffic: { type: integer, description: "Estimated travel time with traffic" }
-          - delay: { type: integer, description: "Additional delay due to traffic" }
-
-    - WeatherDataSchema:
-        Description: "Standard format for retrieving real-time weather data for specific locations."
-        APIEndpoint: "https://api.weatherprovider.com/weather"
-        Parameters:
-          - location: { type: string, required: true, description: "Location as latitude,longitude" }
-          - units: { type: string, enum: [metric, imperial], description: "Units for temperature" }
-        Response:
-          - temperature: { type: number, description: "Current temperature" }
-          - conditions: { type: string, description: "Weather conditions" }
-          - delay_factor: { type: integer, description: "Suggested delay due to weather" }
-
-    - GeocodingDataSchema:
-        Description: "Schema for converting addresses to coordinates."
-        APIEndpoint: "https://maps.googleapis.com/maps/api/geocode/json"
-        Parameters:
-          - address: { type: string, required: true, description: "The address to be geocoded" }
-          - region: { type: string, description: "Region code as a two-character country code" }
-        Response:
-          - latitude: { type: float, description: "Latitude of the location" }
-          - longitude: { type: float, description: "Longitude of the location" }
-
-    - OrderDataSchema:
-        Description: "Schema for structuring new orders for seamless integration."
-        Parameters:
-          - order_id: { type: string, required: true, description: "Unique identifier for order" }
-          - customer_id: { type: string, required: true, description: "Customer placing the order" }
-          - pickup_location: { type: string, required: true, description: "Pickup location as latitude,longitude" }
-          - delivery_location: { type: string, required: true, description: "Delivery location as latitude,longitude" }
-          - priority: { type: string, enum: [high, medium, low], description: "Priority level of delivery" }
-        Response:
-          - status: { type: string, description: "Status of the order request" }
-
-    - RouteOptimizationResponseSchema:
-        Description: "Format for optimized route responses with ETAs for each stop."
-        Parameters:
-          - route_id: { type: string, description: "Unique route identifier" }
-          - stops: { type: array, items: { type: object, properties: { location: { type: string, description: "GPS of stop" }, eta: { type: string, format: date-time, description: "Estimated time of arrival" } } } }
-        Response:
-          - total_duration: { type: integer, description: "Total travel time in minutes" }
