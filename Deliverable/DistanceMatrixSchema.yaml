@@ -1,0 +1,20 @@
+DistanceMatrixSchema:
+  description: >
+    Represents pairwise distances between the depot and customer locations.
+  fields:
+    - name: "From"
+      type: "string"
+      description: >
+        The origin location (e.g., depot or customer).
+    - name: "To"
+      type: "string"
+      description: >
+        The destination location (e.g., depot or customer).
+    - name: "Distance"
+      type: "float"
+      description: >
+        Distance between the 'From' and 'To' locations.
+  example:
+    - From: "Depot"
+      To: "Customer_1"
+      Distance: 12.5
