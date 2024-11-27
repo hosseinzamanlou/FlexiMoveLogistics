@@ -244,4 +244,14 @@ def visualize_two_opt(original_route, optimized_route, coordinates):
 
     plt.tight_layout()
     plt.show()
+    
+    
+    coordinates = [(random.randint(0, 10), random.randint(0, 10)) for _ in range(len(distance_matrix))]
+visualize_nearest_neighbor(routes_nn, coordinates)
 
+
+visualize_sweep(routes, coordinates)
+
+example_route = [0, 1, 2, 3, 4, 0]  # Example initial route
+optimized_route, optimized_distance = two_opt(example_route, distance_matrix)
+visualize_two_opt(example_route, optimized_route, coordinates)
