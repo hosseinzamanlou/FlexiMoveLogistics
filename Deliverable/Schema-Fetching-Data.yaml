@@ -1,0 +1,75 @@
+openapi: 3.0.3
+info:
+  title: Data Fetching API
+  description: API for fetching real-time data such as traffic and weather for route optimization.
+  version: 1.0.0
+
+servers:
+  - url: https://api.fleximove.com/v1
+
+paths:
+  /fetch-data:
+    post:
+      summary: Fetch Real-Time Data
+      description: Retrieves traffic and weather data for the given locations.
+      operationId: fetchData
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                locations:
+                  type: array
+                  description: Array of location coordinates.
+                  items:
+                    type: object
+                    properties:
+                      latitude:
+                        type: number
+                        format: float
+                      longitude:
+                        type: number
+                        format: float
+      responses:
+        '200':
+          description: Successfully fetched data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  traffic:
+                    type: array
+                    description: Traffic data for each location.
+                    items:
+                      type: object
+                      properties:
+                        location:
+                          type: object
+                          properties:
+                            latitude:
+                              type: number
+                            longitude:
+                              type: number
+                        congestion_level:
+                          type: integer
+                  weather:
+                    type: array
+                    description: Weather data for each location.
+                    items:
+                      type: object
+                      properties:
+                        location:
+                          type: object
+                          properties:
+                            latitude:
+                              type: number
+                            longitude:
+                              type: number
+                        temperature:
+                          type: number
+                          format: float
+                        condition:
+                          type: string
