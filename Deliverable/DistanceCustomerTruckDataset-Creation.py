@@ -47,9 +47,9 @@ def generate_truck_capacities(num_trucks, max_capacity=15):
 # ====================
 # Generate Data
 # ====================
-num_locations = 10  # Including depot
-num_customers = 9   # Excluding depot
-num_trucks = 3
+num_locations = 15  # Including depot
+num_customers = 15   # Excluding depot
+num_trucks = 4
 
 # Generate datasets
 df_distance_matrix = generate_distance_matrix(num_locations)
