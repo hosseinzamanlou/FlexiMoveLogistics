@@ -74,14 +74,3 @@ The **FlexiMove Route Optimization AI Agent** is a modular and scalable solution
         "adjusted_distance": 50
     }
     ```
-
-## Highlights
-- Unified YAML configuration files for easy deployment in AI platforms.
-- Modular codebase that can integrate seamlessly with existing logistics software.
-- Ready-to-use examples for testing and validation.
-- Advanced visualizations to interpret routes and forecasts.
-
----
-
-## Next Steps
-Copy this content to the appropriate location in your repository under the **Tool Instruction** section. Feel free to refine or adjust the scenarios and examples to match the exact implementation in your repository.
