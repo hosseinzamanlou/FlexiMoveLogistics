@@ -1,25 +1,92 @@
 solution:
   name: "FlexiMove Logistics Optimization AI Agent"
   purpose: >
-    Enhance the efficiency of logistics operations by optimizing delivery routes,
-    forecasting demand, and dynamically adjusting to real-time conditions such as traffic and weather.
+    The FlexiMove Logistics Optimization AI Agent is a modular and scalable solution
+    designed to improve logistics efficiency. It calculates optimized delivery routes,
+    predicts future delivery demands, and dynamically adjusts routes based on real-time
+    traffic and weather updates. This solution aims to minimize costs, reduce delays,
+    and enhance customer satisfaction in supply chain operations.
   functionalities:
     - route_optimization:
-        description: "Calculate optimal delivery routes for trucks based on customer locations, traffic, and time constraints."
+        description: >
+          Calculates the most efficient delivery routes for trucks. Considers factors
+          such as customer locations, traffic patterns, weather conditions, and time constraints.
+        input_data:
+          - "Distance Matrix: Precomputed distances between all locations."
+          - "Customer Demands: Delivery requirements for each customer."
+          - "Truck Capacities: Maximum load each truck can carry."
+        output:
+          - "Optimized routes for each truck."
+          - "Estimated times of arrival (ETAs) for all stops."
     - real_time_adjustment:
-        description: "Update routes dynamically using live traffic and weather data to maintain on-time delivery."
+        description: >
+          Monitors real-time traffic and weather data to make dynamic route adjustments.
+          Ensures that delivery schedules remain on time despite unexpected conditions.
+        triggers:
+          - "Traffic congestion detected on planned routes."
+          - "Adverse weather conditions affecting delivery schedules."
+          - "Ad-hoc delivery requests added during operations."
+        interaction:
+          - "Re-runs the route optimization algorithm when new data is received."
+        output:
+          - "Updated delivery routes and ETAs."
     - demand_forecasting:
-        description: "Predict delivery demand based on historical data and trends for efficient resource allocation."
+        description: >
+          Uses historical delivery data and seasonal trends to predict future demand.
+          Helps optimize fleet allocation and staffing for upcoming delivery cycles.
+        input_data:
+          - "Historical order data."
+          - "Seasonal demand patterns."
+          - "Public holidays and other event schedules."
+        output:
+          - "Projected demand for the next delivery cycle."
+          - "Resource allocation recommendations."
   interactions:
     - agent_to_agent:
         description: >
-          The Demand Forecasting Agent shares predicted demand values with the Route Optimizer Agent,
-          ensuring resource allocation aligns with upcoming needs.
+          Agents within the solution collaborate to ensure seamless operations. For example:
+          - The Demand Forecasting Agent shares demand projections with the Route Optimizer Agent
+            to ensure efficient resource allocation.
+          - The Real-Time Adjustment Agent notifies the Route Optimizer Agent of significant
+            traffic delays, triggering route recalculation.
     - agent_to_api:
         description: >
-          The Real-Time Adjustment Agent interacts with external APIs, such as Google Maps and Weather APIs,
-          to fetch live updates on traffic and weather conditions.
+          External APIs provide real-time data for decision-making. Key interactions include:
+          - Google Maps API for traffic data to detect congestion and estimate travel times.
+          - Weather API for current and forecasted weather conditions affecting routes.
     - data_pipeline:
         description: >
-          A centralized data pipeline ingests, preprocesses, and serves synthetic and real-world datasets
-          to the agents for analysis and decision-making.
+          A centralized data pipeline ensures smooth data flow between agents and external
+          data sources. It includes:
+          - Ingestion of synthetic and real-world data for initial calculations.
+          - Preprocessing and cleaning of input data for consistency and reliability.
+          - Storage and access mechanisms to provide data to agents as needed.
+  deployment_environment:
+    platform: "Google Cloud Vertex AI"
+    infrastructure:
+      - "Google Maps API: Provides traffic data."
+      - "Weather API: Supplies weather conditions."
+      - "Python-based algorithms: Implements the core logic for route optimization and demand forecasting."
+      - "Cloud storage: Hosts data for accessibility by agents."
+  metrics:
+    - on_time_delivery_rate:
+        description: "Measures the percentage of deliveries completed within the scheduled time window."
+        calculation: "On-Time Deliveries / Total Deliveries"
+    - fuel_efficiency:
+        description: "Tracks fuel consumption improvements due to optimized routing."
+        calculation: "Baseline Fuel Consumption - Actual Fuel Consumption"
+    - response_time_to_ad_hoc_requests:
+        description: "Evaluates the average time taken to incorporate new delivery requests."
+        calculation: "Sum of Ad-Hoc Request Response Times / Total Ad-Hoc Requests"
+    - customer_satisfaction:
+        description: "Based on feedback collected post-delivery."
+        collection_method: "Customer surveys or ratings."
+  explanation_for_agents:
+    purpose: >
+      This YAML file is designed to provide a clear and structured overview of the solution
+      for AI agents. It breaks down the system into understandable components, specifies
+      the interactions between agents, and outlines the metrics for evaluating performance.
+    usage_guidelines:
+      - "Use the 'functionalities' section to understand the tasks each agent performs."
+      - "Refer to 'interactions' to see how agents collaborate and interact with APIs."
+      - "Check the 'metrics' section to evaluate system performance and identify areas for improvement."
