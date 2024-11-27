@@ -74,3 +74,12 @@ The **FlexiMove Route Optimization AI Agent** is a modular and scalable solution
         "adjusted_distance": 50
     }
     ```
+![image](https://github.com/user-attachments/assets/7fb9327e-548d-4565-90d1-a2185fb8d674)
+
+![image](https://github.com/user-attachments/assets/abc91594-050e-4bc3-a19e-af38274b9dc6)
+
+![image](https://github.com/user-attachments/assets/c721f744-b816-474b-bab5-1f90e0a7e47c)
+
+
+
+
