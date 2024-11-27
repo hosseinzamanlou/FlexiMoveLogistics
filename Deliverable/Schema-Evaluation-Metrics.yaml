@@ -1,0 +1,55 @@
+openapi: 3.0.3
+info:
+  title: Evaluation Metrics API
+  description: API for calculating and returning supply chain performance metrics.
+  version: 1.0.0
+
+servers:
+  - url: https://api.fleximove.com/v1
+
+paths:
+  /evaluate-metrics:
+    post:
+      summary: Evaluate Supply Chain Metrics
+      description: Calculates metrics for assessing solution effectiveness.
+      operationId: evaluateMetrics
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                routes:
+                  type: array
+                  description: Optimized routes for evaluation.
+                  items:
+                    type: array
+                    description: List of location indices in the order they were visited.
+                demands:
+                  type: array
+                  description: Customer demands.
+                  items:
+                    type: integer
+                truck_capacities:
+                  type: array
+                  description: Truck capacities for reference.
+                  items:
+                    type: integer
+      responses:
+        '200':
+          description: Successfully calculated metrics
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  on_time_delivery_rate:
+                    type: number
+                    description: Percentage of on-time deliveries.
+                  total_distance:
+                    type: number
+                    description: Total distance traveled by all trucks.
+                  fuel_efficiency:
+                    type: number
+                    description: Ratio of total distance to fuel consumption.
