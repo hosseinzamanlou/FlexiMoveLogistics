@@ -171,6 +171,8 @@ print("Routes (Nearest Neighbor):", routes_nn)
 
 import matplotlib.pyplot as plt
 
+import matplotlib.pyplot as plt
+
 # ====================
 # Visualization: Nearest Neighbor Heuristic
 # ====================
@@ -231,5 +233,15 @@ def visualize_two_opt(original_route, optimized_route, coordinates):
     plt.subplot(1, 2, 2)
     x_opt = [coordinates[loc][0] for loc in optimized_route]
     y_opt = [coordinates[loc][1] for loc in optimized_route]
-    plt.plot(x_opt, y_opt, marker='o', color
+    plt.plot(x_opt, y_opt, marker='o', color='green', label="Optimized Route")
+    for loc in optimized_route:
+        plt.text(coordinates[loc][0], coordinates[loc][1], f'{loc}', fontsize=9)
+    plt.title("Optimized Route")
+    plt.xlabel("X Coordinate")
+    plt.ylabel("Y Coordinate")
+    plt.legend()
+    plt.grid()
+
+    plt.tight_layout()
+    plt.show()
 
