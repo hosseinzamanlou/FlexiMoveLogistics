@@ -1,0 +1,56 @@
+openapi: 3.0.3
+info:
+  title: Route Optimization API
+  description: API for optimizing delivery routes based on input datasets.
+  version: 1.0.0
+
+servers:
+  - url: https://api.fleximove.com/v1
+
+paths:
+  /optimize-routes:
+    post:
+      summary: Optimize Delivery Routes
+      description: Calculates optimal routes for vehicles based on distance, demand, and capacity.
+      operationId: optimizeRoutes
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                distance_matrix:
+                  type: array
+                  description: 2D array of distances between locations.
+                  items:
+                    type: array
+                    items:
+                      type: number
+                demands:
+                  type: array
+                  description: Customer demands.
+                  items:
+                    type: integer
+                truck_capacities:
+                  type: array
+                  description: Capacities of the available trucks.
+                  items:
+                    type: integer
+      responses:
+        '200':
+          description: Successfully calculated routes
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  routes:
+                    type: array
+                    description: Optimized routes for each truck.
+                    items:
+                      type: array
+                      description: List of location indices in the order they should be visited.
+                  total_distance:
+                    type: number
+                    description: Total distance covered by all trucks.
