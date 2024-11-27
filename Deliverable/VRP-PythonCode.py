@@ -169,6 +169,67 @@ truck_capacity = df_truck_capacities["Capacity"][0]
 routes_nn = nearest_neighbor_vrp(distance_matrix, df_customer_demands["Demand"].tolist(), truck_capacity)
 print("Routes (Nearest Neighbor):", routes_nn)
 
-# Visualization
-locations = [(random.randint(0, 10), random.randint(0, 10)) for _ in range(num_locations)]
-visualize_routes(routes_nn, locations)
+import matplotlib.pyplot as plt
+
+# ====================
+# Visualization: Nearest Neighbor Heuristic
+# ====================
+def visualize_nearest_neighbor(routes, coordinates):
+    """Visualize Nearest Neighbor routes."""
+    plt.figure(figsize=(10, 8))
+    for route in routes:
+        x = [coordinates[loc][0] for loc in route]
+        y = [coordinates[loc][1] for loc in route]
+        plt.plot(x, y, marker='o')
+        for loc in route:
+            plt.text(coordinates[loc][0], coordinates[loc][1], f'{loc}', fontsize=9)
+    plt.title("Nearest Neighbor Routes")
+    plt.xlabel("X Coordinate")
+    plt.ylabel("Y Coordinate")
+    plt.grid()
+    plt.show()
+
+# ====================
+# Visualization: Sweep Algorithm
+# ====================
+def visualize_sweep(routes, coordinates):
+    """Visualize Sweep Algorithm optimized routes."""
+    plt.figure(figsize=(10, 8))
+    for route, _ in routes:
+        x = [coordinates[loc][0] for loc in route]
+        y = [coordinates[loc][1] for loc in route]
+        plt.plot(x, y, marker='o')
+        for loc in route:
+            plt.text(coordinates[loc][0], coordinates[loc][1], f'{loc}', fontsize=9)
+    plt.title("Sweep Algorithm Optimized Routes")
+    plt.xlabel("X Coordinate")
+    plt.ylabel("Y Coordinate")
+    plt.grid()
+    plt.show()
+
+# ====================
+# Visualization: 2-Opt Algorithm
+# ====================
+def visualize_two_opt(original_route, optimized_route, coordinates):
+    """Visualize original and optimized routes using 2-Opt."""
+    plt.figure(figsize=(14, 6))
+
+    # Plot original route
+    plt.subplot(1, 2, 1)
+    x_orig = [coordinates[loc][0] for loc in original_route]
+    y_orig = [coordinates[loc][1] for loc in original_route]
+    plt.plot(x_orig, y_orig, marker='o', color='red', label="Original Route")
+    for loc in original_route:
+        plt.text(coordinates[loc][0], coordinates[loc][1], f'{loc}', fontsize=9)
+    plt.title("Original Route")
+    plt.xlabel("X Coordinate")
+    plt.ylabel("Y Coordinate")
+    plt.legend()
+    plt.grid()
+
+    # Plot optimized route
+    plt.subplot(1, 2, 2)
+    x_opt = [coordinates[loc][0] for loc in optimized_route]
+    y_opt = [coordinates[loc][1] for loc in optimized_route]
+    plt.plot(x_opt, y_opt, marker='o', color
+
