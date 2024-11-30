@@ -1,6 +1,0 @@
-vehicle_id,vehicle_type,capacity,fuel_efficiency,current_location,maintenance_status,available_hours
-V001,small,1000,10.5,"46.94809,7.44744",in-service,08:00-18:00
-V002,medium,2000,8.0,"46.94797,7.44461",maintenance_required,08:00-18:00
-V003,large,4000,6.5,"46.9483,7.4514",in-service,08:00-18:00
-V004,electric,1200,0.0,"46.9488,7.4532",in-service,08:00-18:00
-V005,small,1000,10.0,"46.9485,7.4469",in-service,08:00-18:00
