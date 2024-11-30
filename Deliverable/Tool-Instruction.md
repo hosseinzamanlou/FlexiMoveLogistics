@@ -130,15 +130,14 @@ The **FlexiMove Logistics Optimization AI Agent** is a scalable and modular solu
 
 ![image](https://github.com/user-attachments/assets/929eb399-8ce1-43cf-8ecf-44b8f80073f5)
 
-![image](https://github.com/user-attachments/assets/d48f2ee0-ebe2-45b1-8c7a-1acead1e5da7)
+
 
 ![image](https://github.com/user-attachments/assets/513e4c8a-5bc0-4364-9003-1a375fc91044)
 
-![image](https://github.com/user-attachments/assets/eec2c8e9-520e-4a96-99ca-8f96104c515b)
+
 
 ![image](https://github.com/user-attachments/assets/a8211c16-6e73-44b3-a32a-134b32c112f5)
 
-![image](https://github.com/user-attachments/assets/2d62b276-b8d7-4df6-99bb-2e6a82b9b888)
 
 
 
