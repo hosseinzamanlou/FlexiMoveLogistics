@@ -110,6 +110,22 @@ The solution provides visual representations of:
 2. **Static Route Optimization**: Shows results of the three route optimization algorithms (Nearest Neighbor, Sweep, 2-Opt) for one-vehicle and two-vehicle scenarios.
 3. **Comparative Analysis**: Visual matrices highlight the difference between using a single vehicle vs. multiple vehicles, demonstrating the efficiency improvements.
 
+
+
+
+![All Addresses on 2D Plane](https://github.com/user-attachments/assets/53afb5ae-e127-4c64-856d-e493db71cc1d)
+
+![Nearest Neighbor Routes Comparison](https://github.com/user-attachments/assets/929eb399-8ce1-43cf-8ecf-44b8f80073f5)
+
+
+
+![Sweep Algorithm Routes Comparison](https://github.com/user-attachments/assets/513e4c8a-5bc0-4364-9003-1a375fc91044)
+
+
+
+![2-Opt Optimized Routes Comparison](https://github.com/user-attachments/assets/a8211c16-6e73-44b3-a32a-134b32c112f5)
+
+
 ---
 
 ## 🤝 **Contributors**
