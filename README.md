@@ -1,80 +1,128 @@
 # FlexiMove Logistics Optimization
 
-Welcome to the **FlexiMove Logistics Optimization** project! This repository houses our journey toward solving real-world vehicle routing problems (VRP) using cutting-edge AI techniques and data-driven approaches.
+Welcome to the **FlexiMove Logistics Optimization** project! This repository documents our journey in solving complex vehicle routing problems (VRP) using AI-driven algorithms, innovative data visualization, and a step-by-step exploration of real-world logistics challenges.
 
 ---
 
 ## 🚀 **Project Overview**
-In modern logistics, optimizing delivery routes is crucial for cost savings, sustainability, and on-time delivery. FlexiMove Logistics tackles this challenge by developing an AI-driven agent to:
-- Minimize travel distances.
-- Dynamically adapt to real-time changes like traffic or new orders.
-- Ensure operational efficiency while maintaining customer satisfaction.
+FlexiMove Logistics aims to address the challenges of modern logistics by developing an intelligent, adaptable AI agent to optimize delivery routes. The project focuses on achieving cost efficiency, reducing environmental impact, and ensuring timely deliveries, thereby enhancing overall customer satisfaction.
+
+Our AI agent integrates multiple routing optimization algorithms and is designed to:
+- Minimize travel distances for all deliveries.
+- Dynamically adapt to real-time conditions such as traffic or new customer orders.
+- Provide a user-friendly interface with informative data visualizations to understand optimization improvements.
 
 ---
 
 ## 🛠️ **Solution Overview**
-Our AI agent leverages heuristic and clustering algorithms, such as:
-1. **Nearest Neighbor Heuristic**: Quickly generates initial routes.
-2. **Sweep Algorithm with TSP Optimization**: Refines clusters into efficient delivery sequences.
-3. **Dynamic Adjustments**: Adapts routes using live traffic, weather, and order data.
+Our solution utilizes heuristic and clustering-based algorithms combined with real-time adjustment capabilities to tackle the VRP problem effectively. The implemented approaches include:
 
-Key functionalities:
-- **Route Optimization**: Finds the shortest, most efficient delivery paths.
-- **Dynamic Adjustment**: Real-time updates for changing conditions.
-- **Performance Evaluation**: Tracks metrics like on-time delivery rate, fuel efficiency, and customer satisfaction.
+### **1. Nearest Neighbor Heuristic**
+This heuristic provides an efficient way to generate initial routes by prioritizing the nearest unvisited customers. It aims to quickly identify a reasonable solution that can be further refined.
+
+### **2. Sweep Algorithm**
+The Sweep Algorithm clusters customers based on their angular positions relative to the depot, forming smaller, more manageable groups that allow for optimal routing. Each cluster then undergoes further optimization, resembling a Traveling Salesman Problem (TSP) solution.
+
+### **3. 2-Opt Algorithm**
+The initial routes are further refined using the 2-Opt algorithm. This iterative algorithm looks for opportunities to swap two segments within a route to achieve a lower total distance, improving overall efficiency.
+
+### **4. Real-Time Adjustments**
+The AI agent is capable of handling dynamic updates in response to real-time events, such as new orders, traffic congestion, or adverse weather conditions. The routes are recalculated to maintain minimal delivery time disruption.
+
+Key functionalities include:
+- **Static and Dynamic Route Optimization**: Efficiently calculate routes for different vehicle configurations.
+- **Visual Comparison of One vs. Two Vehicles**: Compare route efficiency using one or two vehicles to help demonstrate the impact of increased fleet capacity.
+- **Performance Tracking**: Evaluation metrics like distance traveled, on-time delivery rates, and overall efficiency improvements are generated.
 
 ---
 
 ## 📊 **Datasets**
-We use three synthetic datasets to power our solution:
-1. **DistanceMatrix**: Pairwise distances between depot and customer locations.
-2. **CustomerDemands**: Demand at each location.
-3. **TruckCapacity**: Maximum load capacity of each vehicle.
+Three synthetic datasets form the backbone of our logistics optimization solution:
 
-All datasets are generated programmatically using Python and are structured for scalability.
+1. **Distance Matrix**: Represents pairwise distances between depot and customer locations, generated programmatically based on geographic coordinates.
+2. **Customer Demands**: Provides customer demand values at each location, designed to represent realistic logistics demands.
+3. **Truck Capacities**: Maximum load capacities for each vehicle in the fleet, used to ensure efficient load balancing across deliveries.
+
+All datasets are automatically generated and formatted for scalability, allowing for easy modifications.
 
 ---
 
-## 🧠 **Core Algorithms**
+## 🧠 **Core Algorithms Explained**
+
 ### **1. Nearest Neighbor Heuristic**
-A simple yet effective algorithm to generate initial routes by always visiting the nearest unvisited customer. 
+Generates initial routes by always selecting the nearest unvisited customer, resulting in a quick and relatively optimized solution. This heuristic is especially useful when a fast response is required.
 
 ### **2. Sweep Algorithm**
-Groups customers into clusters based on angular positions and solves smaller TSP problems within each cluster.
+Clusters customers based on their geographic position, allowing for efficient group deliveries. The clustering is then optimized using TSP heuristics to minimize travel within each group.
 
-### **3. Real-Time Adjustments**
-Dynamically recalculates routes based on live inputs like traffic or new orders, ensuring minimal disruption.
+### **3. 2-Opt Algorithm**
+Further optimizes initial routes by systematically reversing segments to find a route with reduced distance. This ensures the final route achieves significant efficiency gains over the initial heuristic.
 
 ---
 
 ## 📈 **Performance Metrics**
-To evaluate the solution, we focus on:
-- **On-Time Delivery Rate**: \((\text{Deliveries Made on Time} / \text{Total Deliveries}) \times 100\%\)
-- **Total Distance Traveled**: Sum of all route distances.
-- **Fuel Efficiency Improvement**: \((\text{Baseline Fuel} - \text{Optimized Fuel}) / \text{Baseline Fuel} \times 100\%\)
-- **Customer Satisfaction**: Derived from post-delivery feedback.
+To evaluate the solution's performance, we use the following key metrics:
+
+- **On-Time Delivery Rate**: Percentage of deliveries completed within the expected time frame.
+  
+  \((	ext{Deliveries Made on Time} / 	ext{Total Deliveries}) 	imes 100\%\)
+
+- **Total Distance Traveled**: The sum of all distances covered by all vehicles. A lower value indicates better optimization.
+
+- **Fuel Efficiency Improvement**: Measures the percentage improvement in fuel consumption compared to a baseline scenario.
+  
+  \((	ext{Baseline Fuel} - 	ext{Optimized Fuel}) / 	ext{Baseline Fuel} 	imes 100\%\)
+
+- **Customer Satisfaction**: Calculated based on post-delivery feedback, reflecting the efficiency and timeliness of deliveries.
 
 ---
 
 ## 🖥️ **How to Run**
-1. Clone the repository:
+1. **Clone the repository**:
    ```bash
    git clone https://github.com/hosseinzamanlou/FlexiMoveLogistics.git
+   ```
 
-### **Install dependencies:**
-```bash
-pip install -r requirements.txt
+2. **Install dependencies**:
+   ```bash
+   pip install -r requirements.txt
+   ```
 
+3. **Generate Synthetic Datasets**:
+   ```bash
+   python generate_datasets.py
+   ```
 
-python generate_datasets.py
+4. **Run Route Optimization Solutions**:
+   ```bash
+   python run_vrp_solutions.py
+   ```
 
+5. **Visualize Routes and Metrics**:
+   - Open the generated results in your browser or review the plots saved in the `outputs/` folder.
 
-python run_vrp_solutions.py
+---
 
+## 📊 **Visualization Examples**
+The solution provides visual representations of:
 
-Visualize Routes and Metrics:
-Open the results in your browser or check the generated plots in the outputs/ folder.
+1. **All Addresses**: Displays all customer locations and depot on a 2D plane using distinct colors.
+2. **Static Route Optimization**: Shows results of the three route optimization algorithms (Nearest Neighbor, Sweep, 2-Opt) for one-vehicle and two-vehicle scenarios.
+3. **Comparative Analysis**: Visual matrices highlight the difference between using a single vehicle vs. multiple vehicles, demonstrating the efficiency improvements.
 
+---
 
+## 🤝 **Contributors**
+- **​Alexander Gafirov | Cédric Fink | Hossein Zamanlou | Patricia Abel | Patrick Sigg **: Original concept, data generation, algorithm implementation, and optimization.
 
+We welcome feedback, suggestions, and collaborations! Please feel free to open an issue or submit a pull request if you'd like to contribute.
+
+---
+
+## 📜 **License**
+This project is licensed under the MIT License.
+
+Happy optimizing! 🚛
+
+---
 
