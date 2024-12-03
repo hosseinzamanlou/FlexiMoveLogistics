@@ -6,6 +6,23 @@ import matplotlib.pyplot as plt
 from itertools import permutations
 import seaborn as sns
 
+
+from google.cloud import storage
+import pandas as pd
+# Load distance_matrix.csv and customer_demands.csv
+bucket_name = "flexi-data-route-optimize"
+distance_matrix = load_csv_from_gcs(bucket_name, "distance_matrix.csv")
+customer_demands = load_csv_from_gcs(bucket_name, "customer_demands.csv")
+
+def load_csv_from_gcs(bucket_name, file_name):
+    client = storage.Client()
+    bucket = client.get_bucket(bucket_name)
+    blob = bucket.blob(file_name)
+    content = blob.download_as_text()
+    return pd.read_csv(pd.compat.StringIO(content))
+
+
+
 # ====================
 # Data Generation
 # ====================
