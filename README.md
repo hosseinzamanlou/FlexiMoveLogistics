@@ -26,8 +26,7 @@ The Sweep Algorithm clusters customers based on their angular positions relative
 ### **3. 2-Opt Algorithm**
 The initial routes are further refined using the 2-Opt algorithm. This iterative algorithm looks for opportunities to swap two segments within a route to achieve a lower total distance, improving overall efficiency.
 
-### **4. Real-Time Adjustments**
-The AI agent is capable of handling dynamic updates in response to real-time events, such as new orders, traffic congestion, or adverse weather conditions. The routes are recalculated to maintain minimal delivery time disruption.
+
 
 Key functionalities include:
 - **Static and Dynamic Route Optimization**: Efficiently calculate routes for different vehicle configurations.
