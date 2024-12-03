@@ -1,21 +1,21 @@
 # Tool Instruction: Comprehensive AI-Driven Logistics Optimization Tool
 
 ## Tool Description
-The **FlexiMove Logistics Optimization AI Agent** is a scalable and modular solution tailored for dynamic logistics challenges. This tool integrates advanced route optimization algorithms, demand forecasting models, and real-time adjustments to provide actionable insights and solutions. Designed for sustainability and operational efficiency, it minimizes delivery costs and enhances customer satisfaction.
+The **FlexiMove Logistics Optimization AI Agent** is a scalable and modular solution designed for dynamic logistics challenges. This tool integrates advanced route optimization algorithms and visualization capabilities to provide actionable insights and efficient solutions. With an emphasis on sustainability and operational efficiency, it aims to minimize delivery costs and improve customer satisfaction.
 
 ## Tool Functionality Guideline with Examples
 
 ### Core Functionality 1: Route Optimization
 - **Scenario**:  
-  Optimizing delivery routes across multiple trucks while adhering to capacity constraints and minimizing total distance traveled.
+  Optimize delivery routes across multiple vehicles while minimizing total distance traveled.
 - **Parameters**:
-  - `distance_matrix`: A 2D array representing distances between locations.
-  - `num_trucks`: The number of trucks used for delivery.
-  - `coordinates`: Location coordinates for each address (including depot).
+  - `distance_matrix`: A 2D array representing distances between all locations.
+  - `num_trucks`: The number of available trucks for delivery.
+  - `coordinates`: The location coordinates for each address (including depot).
 - **Algorithms**:
-  - **Nearest Neighbor**: Creates initial routes by selecting the nearest unvisited customer.
-  - **Sweep Algorithm**: Groups customers into clusters by geographic proximity based on polar coordinates.
-  - **2-Opt Refinement**: Refines routes to minimize total distance further.
+  - **Nearest Neighbor Heuristic**: Generates initial routes by visiting the nearest unvisited customer.
+  - **Sweep Algorithm**: Groups customers into clusters based on their polar coordinates.
+  - **2-Opt Refinement**: Optimizes routes further to reduce total travel distance.
 - **Example**:
   - **Input**:
     ```json
@@ -36,121 +36,63 @@ The **FlexiMove Logistics Optimization AI Agent** is a scalable and modular solu
     }
     ```
 
-### Core Functionality 2: Demand Forecasting
+### Core Functionality 2: Visualization
 - **Scenario**:  
-  Predicting delivery demand for better resource allocation and efficient scheduling during peak periods.
-- **Parameters**:
-  - `historical_demand_data`: Time-series data of past customer demands.
-  - `seasonality`: Indicate whether weekly or monthly trends are considered.
-- **Example**:
-  - **Input**:
-    ```json
-    {
-        "historical_demand_data": [100, 120, 130, 150, 140, 160],
-        "seasonality": "monthly"
-    }
-    ```
-  - **Output**:
-    ```json
-    {
-        "predicted_demand": [170, 180, 190],
-        "time_period": ["Month_7", "Month_8", "Month_9"]
-    }
-    ```
-
-### Core Functionality 3: Real-Time Adjustment
-- **Scenario**:  
-  Dynamically adjusting routes in response to real-time updates, such as traffic congestion, weather delays, or new customer orders.
-- **Parameters**:
-  - `live_traffic_data`: Current traffic data affecting travel times.
-  - `weather_conditions`: Weather impacts for route adjustments.
-  - `new_orders`: Details of newly received customer orders.
-- **Example**:
-  - **Input**:
-    ```json
-    {
-        "live_traffic_data": [[0, 10, 15, 30], [10, 0, 20, 25], [15, 20, 0, 40], [30, 25, 40, 0]],
-        "weather_conditions": [0, 2, 3, 1],
-        "new_orders": [{"CustomerID": "Customer_4", "Demand": 4}]
-    }
-    ```
-  - **Output**:
-    ```json
-    {
-        "updated_routes": [["Depot", "Customer_1", "Customer_3", "Depot"], ["Depot", "Customer_2", "Customer_4", "Depot"]],
-        "adjusted_distance": 50
-    }
-    ```
-
-### Core Functionality 4: Visualization
-- **Scenario**:  
-  Visualizing delivery routes, demand forecasts, and algorithm performance for better understanding and presentation.
+  Visualize delivery routes, including comparisons between one-vehicle and multi-vehicle scenarios.
 - **Visualization Outputs**:
   - **All Addresses Visualization**: Displays all customer addresses and depot locations on a 2D plane.
-  - **Single and Dual Vehicle Optimization Visualization**: Displays comparison between one-vehicle and two-vehicle scenarios for each route optimization algorithm.
-  - **Demand Forecasting**: Shows demand trends and predictions.
-  - **Real-Time Adjustments**: Highlights updated routes in response to live data.
+  - **Single and Dual Vehicle Optimization Visualization**: Visualize the comparison between one-vehicle and two-vehicle scenarios for each route optimization algorithm.
 - **Example Visualization**:
-  - **Route Plot**: A visual graph displaying optimized delivery paths for trucks, with annotated customer locations and depot.
-  - **Demand Trend**: A line chart comparing historical demands with predicted values.
+  - **Route Plot**: A graph displaying optimized delivery paths for vehicles, with annotated customer locations and depot.
 
 ### Key Features
-- Modular architecture for easy customization and scalability.
-- Comprehensive YAML configurations for seamless integration with AI platforms.
-- Real-time adaptability to dynamic logistics conditions.
+- **Scalable and Modular Architecture**: Designed for scalability, allowing easy customization of route optimization algorithms.
+- **Comprehensive YAML Configurations**: Facilitates seamless integration into AI platforms.
+- **Visualization Tools**: Interactive visuals to highlight efficiency differences between scenarios.
 
-### Example AI Agent Deployment
+### AI Agent Deployment Example
 - **Input Requirements**:
-  - YAML configuration file specifying functionality, parameters, and interaction protocols.
-  - Data sources (e.g., distance matrices, historical demands, live traffic updates).
+  - YAML configuration file specifying parameters and interaction protocols.
+  - Data files (e.g., distance matrices, location coordinates).
 - **Output Deliverables**:
-  - Optimized routes with visualizations.
-  - Forecasted demand trends.
-  - Evaluation metrics for supply chain performance.
+  - Optimized routes for delivery vehicles.
+  - Visualizations comparing different optimization scenarios.
 
 ---
 
 ### How to Use
 1. **Prepare Input Data**:
-   - Ensure `distance_matrix.csv`, `customer_demands.csv`, and `truck_capacities.csv` are available.
-   - For real-time data, integrate traffic and weather APIs.
+   - Ensure `distance_matrix.csv` is available, with valid data representing distances between depot and customer locations.
+   - For real-time data, integrate necessary sources if needed.
 
 2. **Run Algorithms**:
-   - Execute Python scripts for route optimization and demand forecasting.
-   - Visualize results using the provided plotting functions.
+   - Execute Python scripts for route optimization.
+   - Generate visualizations for better understanding using the provided plotting functions.
 
 3. **Deploy AI Agent**:
-   - Provide the YAML file to an AI platform.
-   - Use APIs for real-time data integration and automation.
+   - Use YAML configurations to create a model on your chosen AI platform.
+   - Integrate external APIs as required.
 
 4. **Evaluate Metrics**:
-   - Use calculated metrics like on-time delivery rate, total distance, and fuel efficiency for performance analysis.
+   - Assess route efficiency using metrics like total distance and number of vehicles used.
 
 ---
 
 ## Visualization Examples
 
 ### **All Addresses Visualization**
-- Displays all locations (Depot and Customers) with unique colors on a 2D plane to highlight their positions and labels.
+- Displays all customer addresses and depot locations with distinct colors on a 2D plane for easy identification.
 
-### **Optimization Algorithm Visualizations**
+### **Route Optimization Algorithm Visualizations**
 - **Nearest Neighbor Heuristic**:
-  - One vehicle and two-vehicle scenarios displayed for comparison.
-  - Shows the optimized routes generated by selecting the nearest unvisited customer.
+  - Displays one-vehicle and two-vehicle scenarios, showing routes generated by the nearest customer approach.
 - **Sweep Algorithm**:
-  - Uses angular clustering to optimize routes.
-  - Visualization compares one and two-vehicle routing scenarios.
+  - Shows clustered route optimizations.
+  - Visualizes both single and multi-vehicle routes.
 - **2-Opt Refinement**:
-  - Refines the initial route using a 2-opt algorithm to reduce total travel distance.
-  - Compares the routes optimized for one vehicle and two vehicles.
-
-## Key Insights:
-- The provided visualizations allow stakeholders to understand the impact of using multiple vehicles and different algorithms in terms of route efficiency.
-- This modular and user-friendly approach ensures efficient logistics operations that can adapt to changing requirements.
+  - Compares refined routes for one and two vehicles to minimize travel distance.
 
 ---
-
-
 
 
 
