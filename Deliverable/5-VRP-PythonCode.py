@@ -3,25 +3,7 @@ import pandas as pd
 import numpy as np
 import math
 import matplotlib.pyplot as plt
-from itertools import permutations
 import seaborn as sns
-
-
-from google.cloud import storage
-import pandas as pd
-# Load distance_matrix.csv and customer_demands.csv
-bucket_name = "flexi-data-route-optimize"
-distance_matrix = load_csv_from_gcs(bucket_name, "distance_matrix.csv")
-customer_demands = load_csv_from_gcs(bucket_name, "customer_demands.csv")
-
-def load_csv_from_gcs(bucket_name, file_name):
-    client = storage.Client()
-    bucket = client.get_bucket(bucket_name)
-    blob = bucket.blob(file_name)
-    content = blob.download_as_text()
-    return pd.read_csv(pd.compat.StringIO(content))
-
-
 
 # ====================
 # Data Generation
@@ -192,17 +174,19 @@ def visualize_all_addresses(coordinates):
     plt.legend()
     plt.show()
 
-# Example Usage
-visualize_all_addresses(coordinates)
-
-
+# ====================
+# Revised Example Usage
+# ====================
 
 # Step 1: Generate coordinates and distance matrix
 num_locations = 10
 coordinates = generate_coordinates(num_locations)
 distance_matrix = generate_distance_matrix(coordinates)
 
-# Step 2: Execute Route Optimization Algorithms and Visualize
+# Step 2: Visualize all addresses
+visualize_all_addresses(coordinates)
+
+# Step 3: Execute Route Optimization Algorithms and Visualize
 # Nearest Neighbor Heuristic
 nn_route_1 = nearest_neighbor_vrp(distance_matrix, num_trucks=1)
 nn_route_2 = nearest_neighbor_vrp(distance_matrix, num_trucks=2)
