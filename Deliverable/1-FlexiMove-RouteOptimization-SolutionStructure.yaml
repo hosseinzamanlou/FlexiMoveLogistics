@@ -17,37 +17,14 @@ solution:
         output:
           - "Optimized routes for each truck."
           - "Estimated times of arrival (ETAs) for all stops."
-    - real_time_adjustment:
-        description: >
-          Monitors real-time traffic and weather data to make dynamic route adjustments.
-          Ensures that delivery schedules remain on time despite unexpected conditions.
-        triggers:
-          - "Traffic congestion detected on planned routes."
-          - "Adverse weather conditions affecting delivery schedules."
-          - "Ad-hoc delivery requests added during operations."
-        interaction:
-          - "Re-runs the route optimization algorithm when new data is received."
-        output:
-          - "Updated delivery routes and ETAs."
-    - demand_forecasting:
-        description: >
-          Uses historical delivery data and seasonal trends to predict future demand.
-          Helps optimize fleet allocation and staffing for upcoming delivery cycles.
-        input_data:
-          - "Historical order data."
-          - "Seasonal demand patterns."
-          - "Public holidays and other event schedules."
-        output:
-          - "Projected demand for the next delivery cycle."
-          - "Resource allocation recommendations."
+    
   interactions:
     - agent_to_agent:
         description: >
           Agents within the solution collaborate to ensure seamless operations. For example:
           - The Demand Forecasting Agent shares demand projections with the Route Optimizer Agent
             to ensure efficient resource allocation.
-          - The Real-Time Adjustment Agent notifies the Route Optimizer Agent of significant
-            traffic delays, triggering route recalculation.
+        
     - agent_to_api:
         description: >
           External APIs provide real-time data for decision-making. Key interactions include:
@@ -65,7 +42,7 @@ solution:
     infrastructure:
       - "Google Maps API: Provides traffic data."
       - "Weather API: Supplies weather conditions."
-      - "Python-based algorithms: Implements the core logic for route optimization and demand forecasting."
+      - "Python-based algorithms: Implements the core logic for route optimization."
       - "Cloud storage: Hosts data for accessibility by agents."
   metrics:
     - on_time_delivery_rate:
@@ -74,9 +51,6 @@ solution:
     - fuel_efficiency:
         description: "Tracks fuel consumption improvements due to optimized routing."
         calculation: "Baseline Fuel Consumption - Actual Fuel Consumption"
-    - response_time_to_ad_hoc_requests:
-        description: "Evaluates the average time taken to incorporate new delivery requests."
-        calculation: "Sum of Ad-Hoc Request Response Times / Total Ad-Hoc Requests"
     - customer_satisfaction:
         description: "Based on feedback collected post-delivery."
         collection_method: "Customer surveys or ratings."
