@@ -117,7 +117,7 @@ def visualize_static(coordinates, title, routes_one, routes_two):
     route_colors = sns.color_palette("Set2", len(routes_two))  # Colors for two vehicle routes
 
     # Plot for one vehicle
-    axs[0].set_title(f"{title} (1 Vehicle)")
+    axs[0].set_title(f"{title} (One Vehicle)")
     for route in routes_one:
         for i in range(len(route) - 1):
             start, end = route[i], route[i + 1]
@@ -131,7 +131,7 @@ def visualize_static(coordinates, title, routes_one, routes_two):
         axs[0].text(x + 0.3, y + 0.3, label, fontsize=9)
 
     # Plot for two vehicles
-    axs[1].set_title(f"{title} (2 Vehicles)")
+    axs[1].set_title(f"{title} (Three Vehicle)")
     for idx, route in enumerate(routes_two):
         route_color = route_colors[idx]  # Use a different color for each route
         for i in range(len(route) - 1):
@@ -189,13 +189,13 @@ visualize_all_addresses(coordinates)
 # Step 3: Execute Route Optimization Algorithms and Visualize
 # Nearest Neighbor Heuristic
 nn_route_1 = nearest_neighbor_vrp(distance_matrix, num_trucks=1)
-nn_route_2 = nearest_neighbor_vrp(distance_matrix, num_trucks=2)
+nn_route_2 = nearest_neighbor_vrp(distance_matrix, num_trucks=3)
 visualize_static(coordinates, "Nearest Neighbor Heuristic", nn_route_1, nn_route_2)
 
 # Sweep Algorithm
 polar_coords = calculate_polar_coordinates(coordinates)
 sweep_route_1 = sweep_algorithm(polar_coords, num_trucks=1)
-sweep_route_2 = sweep_algorithm(polar_coords, num_trucks=2)
+sweep_route_2 = sweep_algorithm(polar_coords, num_trucks=3)
 visualize_static(coordinates, "Sweep Algorithm", sweep_route_1, sweep_route_2)
 
 # 2-Opt Algorithm (starting from Nearest Neighbor route)
