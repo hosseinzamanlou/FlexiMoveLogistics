@@ -2,9 +2,8 @@ solution:
   name: "FlexiMove Logistics Optimization AI Agent"
   purpose: >
     The FlexiMove Logistics Optimization AI Agent is a modular and scalable solution
-    designed to improve logistics efficiency. It calculates optimized delivery routes,
-    predicts future delivery demands, and dynamically adjusts routes based on real-time
-    traffic and weather updates. This solution aims to minimize costs, reduce delays,
+    designed to improve logistics efficiency. It calculates optimized delivery routes.
+    This solution aims to minimize costs, reduce delays,
     and enhance customer satisfaction in supply chain operations.
   functionalities:
     - route_optimization:
